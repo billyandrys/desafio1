@@ -1,14 +1,23 @@
 <?php
+
 namespace Dominio;
-use Persistencia\Fachada as FachadaPersistencia;
 
 class Usuario
 {
-    static public function getUsuarios()
+
+    private $_id;
+    private $_nombre;
+    
+    public function __construct($id, $nombre)
     {
-                      
-           return FachadaPersistencia::getPersistencia();
-           
+        $this->_id = $id;
+        $this->_nombre = $nombre;
     }
+
+    public function __toString()
+    {
+        return $this->_nombre;
+    }
+
 }
 

@@ -2,22 +2,12 @@
 namespace Persistencia;
 
 use \ManejadorBaseDeDatosInterface;
+use Tool\Configuracion as Config;
 
-/**
- * Clase PostgreSQL
- *
- * A modo de ejemplo los parametros estan definidos
- * como constantes, pero en la "vida real" podrian
- * estar en un archivo de configuracion aparte.
- */
 class PostgreSQL implements ManejadorBaseDeDatosInterface
 {
 
-    const USUARIO = 'root';
-    const CLAVE = '';
-    const BASE = 'tarea5';
-    const SERVIDOR = 'localhost';
-
+    
     /**
      *
      * @var resource puntero a la conexion real
@@ -27,10 +17,10 @@ class PostgreSQL implements ManejadorBaseDeDatosInterface
     public function conectar()
     {
         $this->_conexion = pg_connect(
-                "host=" . self::SERVIDOR
-                . " port=5432 dbname=" . self::BASE
-                . " user=" . self::USUARIO
-                . " password=" . self::CLAVE
+                "host=" . Config::SERVIDOR
+                . " port=5432 dbname=" . Config::BASE
+                . " user=" . Config::USUARIO
+                . " password=" . Config::CLAVE
         );
     }
 

@@ -1,14 +1,16 @@
 <?php
+
 namespace Persistencia;
+
 /**
- * BaseDeDatos
+ * BaseDeDatos = surforce
+ * Table usuarios
  *
  */
-
-
 use Persistencia\ManejadorBaseDeDatosInterface;
 use Persistencia\Sql;
-class BaseDeDatos 
+
+class Db
 {
 
     /**
