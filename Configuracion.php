@@ -1,24 +1,26 @@
 <?php
 
-require_once './SplClassLoader.php';
-class Configuracion
-{   
-    
-    
-    
-    
-    public function __construct($classLoader)
-    {
-        $loader = new SplClassLoader($classLoader, __DIR__);
-        $loader->register();
+const DEBUG = false;
+
+spl_autoload_register('myAutoload');
+
+function myAutoload($className)
+{
+    $className = ltrim($className, '\\');
+
+    if (DEBUG) {
+        echo $className . '<br>';
     }
-    
 
-//$loaderBaseDatos
-//$classLoaderPersistencia = new SplClassLoader('Persistencia', __DIR__);
-//$classLoaderPersistencia->register();
-//$classLoaderPresentacion = new SplClassLoader('Presentacion', __DIR__);
-//$classLoaderPresentacion->register();
-//
+    $fileName = '';
+    $namespace = '';
+
+    if ($lastNsPos = strripos($className, '\\')) {
+        $namespace = substr($className, 0, $lastNsPos);
+        $className = substr($className, $lastNsPos + 1);
+        $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+    }
+
+    $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+    require $fileName;
 }
-

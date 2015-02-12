@@ -1,17 +1,23 @@
 <?php
+
 namespace Dominio;
-use Dominio\Usuario;
+use Persistencia\Fachada as Persistencia;
 
+abstract class Fachada {
 
-
-abstract class Fachada
-{
     static public function getUsuarios()
     {
-        return Usuario::getUsuarios();
+        
+        $usuarios = Persistencia::getPersistencia();
+
+        $ret = array();
+
+        foreach ($usuarios as $usuario) {
+            $ret[] = new Usuario($usuario['id'], $usuario['nombres']);
+        }
+
+        return $ret;
     }
-    
-       
-    
+
 }
 

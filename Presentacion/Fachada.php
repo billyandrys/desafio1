@@ -2,44 +2,44 @@
 
 namespace Presentacion;
 
-class Fachada
+use Presentacion\Html\Ui;
+use Presentacion\Html\Li;
+use Presentacion\Html\Layout as Layout;
+use Dominio\Fachada as Dominio;
+
+abstract class Fachada
 {
 
-    public function head()
+    public static function runList(array $list)
     {
-         echo '<!DOCTYPE html>'.
-        '<html lang = "es">'.
-        '<head>' .
-        '<meta charset = "UTF-8">' .
-        '<title>Usaurios</title>' .
-        '</head>' .
-        '<body>' .
-        '<ul>';
+        
+        $result = Ui::getTagOpen();
+        
+        foreach ($list as $items){
+          
+            $result .= Li::getOpen() . $items. Li::getClosure();
+           
+            }
+        $result.= Ui::getTagClose();
+        return $result;
     }
 
-public function recorrer($matriz)
+    public static function allUser()
     {
+        $result = Layout::getHead();
+        try {
+            $user = Dominio::getUsuarios();
+            $result .= self::runList($user);
+        } catch (Exception $e) {
 
-        foreach($matriz as $key => $value){
+            $result .= 'Error al intetar mostrar el listado de usuarios';
 
-            if (is_array($value)){
-//si es un array sigo recorriendo
-           
-            $this->recorrer($value);
-            }else{
-//si es un elemento lo muestro
-            echo '<il> '.$value.'</il>';
-            echo '<br>';
-            }
-
+            Tool ::errorLog($result);
         }
 
-    }
-    public function foot()
-    {
-        echo '</ul>' .
-        '</body>' .
-        '</html>';
+        $result .= Layout::getFooter();
+
+        echo $result;
     }
 
 }
